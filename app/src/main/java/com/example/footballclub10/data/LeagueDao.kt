@@ -12,4 +12,7 @@ interface LeagueDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertLeague(vararg leagues: League)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertLeagues(leagues: List<League>)
 }

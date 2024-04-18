@@ -1,0 +1,136 @@
+{
+  "leagues":[
+    {
+      "idLeague":"4328",
+      "strLeague":"English Premier League",
+      "strSport":"Soccer",
+      "strLeagueAlternate":"Premier League, EPL"
+    },
+    {
+      "idLeague":"4329",
+      "strLeague":"English League Championship",
+      "strSport":"Soccer",
+      "strLeagueAlternate":"Championship"
+    },
+    {
+      "idLeague":"4330",
+      "strLeague":"Scottish Premier League",
+      "strSport":"Soccer",
+      "strLeagueAlternate":"Scottish Premiership, SPFL"
+    },
+    {
+      "idLeague":"4331",
+      "strLeague":"German Bundesliga",
+      "strSport":"Soccer",
+      "strLeagueAlternate":"Bundesliga, FuÃŸball-Bundesliga"
+    },
+    {
+      "idLeague":"4332",
+      "strLeague":"Italian Serie A",
+      "strSport":"Soccer",
+      "strLeagueAlternate":"Serie A"
+    },
+    {
+      "idLeague":"4334",
+      "strLeague":"French Ligue 1",
+      "strSport":"Soccer",
+      "strLeagueAlternate":"Ligue 1 Conforama"
+    },
+    {
+      "idLeague":"4335",
+      "strLeague":"Spanish La Liga",
+      "strSport":"Soccer",
+      "strLeagueAlternate":"LaLiga Santander, La Liga"
+    },
+    {
+      "idLeague":"4336",
+      "strLeague":"Greek Superleague Greece",
+      "strSport":"Soccer",
+      "strLeagueAlternate":""
+    },
+    {
+      "idLeague":"4337",
+      "strLeague":"Dutch Eredivisie",
+      "strSport":"Soccer",
+      "strLeagueAlternate":"Eredivisie"
+    },
+    {
+      "idLeague":"4338",
+      "strLeague":"Belgian First Division A",
+      "strSport":"Soccer",
+      "strLeagueAlternate":"Jupiler Pro League"
+    },
+    {
+      "idLeague":"4339",
+      "strLeague":"Turkish Super Lig",
+      "strSport":"Soccer",
+      "strLeagueAlternate":"Super Lig"
+    },
+    {
+      "idLeague":"4340",
+      "strLeague":"Danish Superliga",
+      "strSport":"Soccer",
+      "strLeagueAlternate":""
+    },
+    {
+      "idLeague":"4344",
+      "strLeague":"Portuguese Primeira Liga",
+      "strSport":"Soccer",
+      "strLeagueAlternate":"Liga NOS"
+    },
+    {
+      "idLeague":"4346",
+      "strLeague":"American Major League Soccer",
+      "strSport":"Soccer",
+      "strLeagueAlternate":"MLS, Major League Soccer"
+    },
+    {
+      "idLeague":"4347",
+      "strLeague":"Swedish Allsvenskan",
+      "strSport":"Soccer",
+      "strLeagueAlternate":"Fotbollsallsvenskan"
+    },
+    {
+      "idLeague":"4350",
+      "strLeague":"Mexican Primera League",
+      "strSport":"Soccer",
+      "strLeagueAlternate":"Liga MX"
+    },
+    {
+      "idLeague":"4351",
+      "strLeague":"Brazilian Serie A",
+      "strSport":"Soccer",
+      "strLeagueAlternate":""
+    },
+    {
+      "idLeague":"4354",
+      "strLeague":"Ukrainian Premier League",
+      "strSport":"Soccer",
+      "strLeagueAlternate":""
+    },
+    {
+      "idLeague":"4355",
+      "strLeague":"Russian Football Premier League",
+      "strSport":"Soccer",
+      "strLeagueAlternate":"Ð§ÐµÐ¼Ð¿Ð¸Ð¾Ð½Ð°Ñ‚ Ð Ð¾ÑÑÐ¸Ð¸ Ð¿Ð¾ Ñ„ÑƒÑ‚Ð±Ð¾Ð»Ñƒ"
+    },
+    {
+      "idLeague":"4356",
+      "strLeague":"Australian A-League",
+      "strSport":"Soccer",
+      "strLeagueAlternate":"A-League"
+    },
+    {
+      "idLeague":"4358",
+      "strLeague":"Norwegian Eliteserien",
+      "strSport":"Soccer",
+      "strLeagueAlternate":"Eliteserien"
+    },
+    {
+      "idLeague":"4359",
+      "strLeague":"Chinese Super League",
+      "strSport":"Soccer",
+      "strLeagueAlternate":""
+    }
+  ]
+}

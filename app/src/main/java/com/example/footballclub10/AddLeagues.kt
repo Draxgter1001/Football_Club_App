@@ -1,5 +1,6 @@
 package com.example.footballclub10
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -11,6 +12,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -28,6 +31,7 @@ import com.example.footballclub10.data.League
 import com.example.footballclub10.data.LeagueDao
 import com.example.footballclub10.ui.theme.FootBallClub10Theme
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 lateinit var db: AppDatabase
 lateinit var league_dao: LeagueDao
@@ -47,14 +51,39 @@ class AddLeagues : ComponentActivity() {
     }
 }
 
+private fun getLeaguesFromJson(context: Context): List<League> {
+    val json = context.assets.open("leagues.json").bufferedReader().use { it.readText() }
+    val leagues = mutableListOf<League>()
+
+    val jsonArray = JSONObject(json).getJSONArray("leagues")
+    for (i in 0 until jsonArray.length()) {
+        val jsonObject = jsonArray.getJSONObject(i)
+        val league = League(
+            idLeague = jsonObject.getInt("idLeague"),
+            strLeague = jsonObject.getString("strLeague"),
+            strSport = jsonObject.getString("strSport"),
+            strLeagueAlternate = jsonObject.getString("strLeagueAlternate")
+        )
+        leagues.add(league)
+    }
+
+    return leagues
+}
 @Composable
 fun AddLeaguesContent(){
     var strLeague by remember { mutableStateOf("") }
     var strSport by remember { mutableStateOf("") }
     var strLeagueAlternate by remember{ mutableStateOf("") }
+    val leagueString by remember { mutableStateOf("") }
+    var leagues by remember { mutableStateOf(emptyList<League>()) }
 
-    var context = LocalContext.current
+    val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    val leaguesJson = getLeaguesFromJson(context)
+
+    LaunchedEffect(leagueString){
+        league_dao.insertLeagues(leaguesJson)
+    }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -116,9 +145,43 @@ fun AddLeaguesContent(){
                 Text(text = "Add new League", color = Color.Black)
             }
 
-            Button(onClick = { /*TODO*/ }) {
+            Button(onClick = {
+                scope.launch {
+                    try {
+                        val retrievedLeagues = league_dao.getAllLeagues()
+                        leagues = retrievedLeagues
+                    } catch (e: Exception) {
+                        Toast.makeText(context, "Failed to retrieve leagues: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }) {
                 Text(text = "Retrieve Leagues", color = Color.Black)
             }
+        }
+
+        Spacer(modifier = Modifier.padding(10.dp))
+
+
+        Column(
+            modifier = Modifier
+                .wrapContentSize(Alignment.TopCenter)
+                .padding(top = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
+            LeagueList(leagues = leagues)
+        }
+    }
+
+}
+
+@Composable
+fun LeagueList(leagues: List<League>) {
+    LazyColumn {
+        items(leagues) { league ->
+            Text(
+                text = "${league.idLeague}: ${league.strLeague} - ${league.strSport} - ${league.strLeagueAlternate}",
+                modifier = Modifier.padding(16.dp)
+            )
         }
     }
 }
