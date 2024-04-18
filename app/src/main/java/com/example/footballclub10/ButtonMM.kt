@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 fun MainMenuButtons(context: Context){
     val fontSize by remember { mutableStateOf(24.sp) }
 
+
     Column(modifier = Modifier
         .fillMaxSize()
         .wrapContentSize(Alignment.Center)) {
