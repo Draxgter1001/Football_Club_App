@@ -31,7 +31,6 @@ import com.example.footballclub10.ui.theme.FootBallClub10Theme
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
-
 private lateinit var league_dao: LeagueDao
 
 class AddLeagues : ComponentActivity() {
@@ -157,7 +156,6 @@ fun AddLeaguesContent(){
         }
 
         Spacer(modifier = Modifier.padding(10.dp))
-
 
         Column(
             modifier = Modifier
