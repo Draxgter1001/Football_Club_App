@@ -25,22 +25,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.room.Room
-import com.example.footballclub10.data.AppDatabase
 import com.example.footballclub10.data.League
 import com.example.footballclub10.data.LeagueDao
 import com.example.footballclub10.ui.theme.FootBallClub10Theme
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
-lateinit var db: AppDatabase
-lateinit var league_dao: LeagueDao
+
+private lateinit var league_dao: LeagueDao
 
 class AddLeagues : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        db = Room.databaseBuilder(this, AppDatabase::class.java, "league_database").build()
-        league_dao = db.getDao()
+        league_dao = db.getLeagueDao()
         setContent {
             FootBallClub10Theme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
