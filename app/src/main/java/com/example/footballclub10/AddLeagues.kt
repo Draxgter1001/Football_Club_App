@@ -168,7 +168,6 @@ fun AddLeaguesContent(){
             LeagueList(leagues = leagues)
         }
     }
-
 }
 
 @Composable
