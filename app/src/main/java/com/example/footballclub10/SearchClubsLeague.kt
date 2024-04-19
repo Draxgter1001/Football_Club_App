@@ -26,6 +26,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.footballclub10.data.Club
@@ -95,7 +96,7 @@ fun SearchClubsLeagueContent(){
                 },
                 modifier = Modifier.padding(end = 20.dp)
                 ) {
-                Text(text = "Retrieve Clubs")
+                Text(text = "Retrieve Clubs", color = Color.Black)
             }
 
             Button(
@@ -109,7 +110,7 @@ fun SearchClubsLeagueContent(){
                     }
                 },
             ) {
-                Text(text = "Save clubs to Database")
+                Text(text = "Save clubs to Database", color = Color.Black)
             }
         }
 
