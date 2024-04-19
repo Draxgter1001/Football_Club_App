@@ -201,7 +201,7 @@ private suspend fun parseJSON(stb: StringBuilder, context: Context, saveToDataba
 
         return allClubs.append("\n\n").toString()
     } catch (e: JSONException) {
-        Toast.makeText(context, "No teams found for the given league.", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "No clubs found for the given league.", Toast.LENGTH_SHORT).show()
         return ""
     } catch (e: Exception) {
         Toast.makeText(context, "Failed to retrieve clubs: ${e.message}", Toast.LENGTH_SHORT).show()
