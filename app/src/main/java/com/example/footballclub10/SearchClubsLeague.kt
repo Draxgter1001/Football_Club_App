@@ -28,6 +28,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.example.footballclub10.data.Club
+import com.example.footballclub10.data.ClubDao
 import com.example.footballclub10.ui.theme.FootBallClub10Theme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -41,9 +43,12 @@ import java.lang.StringBuilder
 import java.net.HttpURLConnection
 import java.net.URL
 
+private lateinit var club_dao: ClubDao
+
 class SearchClubsLeague : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        club_dao = db.getClubDao()
         setContent {
             FootBallClub10Theme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
@@ -58,6 +63,7 @@ class SearchClubsLeague : ComponentActivity() {
 fun SearchClubsLeagueContent(){
     var clubInfoDisplay by remember{ mutableStateOf("") }
     var keyword by remember { mutableStateOf("") }
+    var saveToDatabase by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -83,7 +89,8 @@ fun SearchClubsLeagueContent(){
                 onClick =
                 {
                     scope.launch {
-                        clubInfoDisplay = fetchClubs(keyword, context)
+                        val stb = fetchClubs(keyword)
+                        clubInfoDisplay = parseJSON(stb, context, saveToDatabase)
                     }
                 },
                 modifier = Modifier.padding(end = 20.dp)
@@ -92,7 +99,15 @@ fun SearchClubsLeagueContent(){
             }
 
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    saveToDatabase = true
+                    scope.launch{
+                    val stb = fetchClubs(keyword)
+                    clubInfoDisplay = parseJSON(stb, context, saveToDatabase)
+                    saveToDatabase = false
+                    Toast.makeText(context, "Clubs saved to database",  Toast.LENGTH_SHORT).show()
+                    }
+                },
             ) {
                 Text(text = "Save clubs to Database")
             }
@@ -107,33 +122,31 @@ fun SearchClubsLeagueContent(){
     }
 }
 
-private suspend fun fetchClubs(keyword: String, context: Context): String{
+private suspend fun fetchClubs(keyword: String): StringBuilder {
     val urlString = "https://www.thesportsdb.com/api/v1/json/3/search_all_teams.php?l=$keyword"
     val url = URL(urlString)
     val con: HttpURLConnection = url.openConnection() as HttpURLConnection
 
     val stb = StringBuilder()
 
-    withContext(Dispatchers.IO){
+    withContext(Dispatchers.IO) {
         val bf = BufferedReader(InputStreamReader(con.inputStream))
         var line: String? = bf.readLine()
-        while(line != null){
+        while (line != null) {
             stb.append(line + "\n")
             line = bf.readLine()
         }
     }
 
-    return withContext(Dispatchers.Main) {
-        parseJSON(stb, context)
-    }
+    return stb
 }
 
-private fun parseJSON(stb: StringBuilder, context: Context): String{
-
+private suspend fun parseJSON(stb: StringBuilder, context: Context, saveToDatabase: Boolean): String {
+    val clubs = mutableListOf<Club>()
     try {
         val json = JSONObject(stb.toString())
-        var allClubs = StringBuilder()
-        var jsonArray: JSONArray = json.getJSONArray("teams")
+        val allClubs = StringBuilder()
+        val jsonArray: JSONArray = json.getJSONArray("teams")
 
         for (i in 0 until jsonArray.length()) {
             val team: JSONObject = jsonArray[i] as JSONObject
@@ -154,6 +167,25 @@ private fun parseJSON(stb: StringBuilder, context: Context): String{
             val strTeamJersey = team["strTeamJersey"] as String
             val strTeamLogo = team["strTeamLogo"] as String
 
+            val club = Club(
+                idTeam = idTeam,
+                strTeam = strTeam,
+                strTeamShort = strTeamShort,
+                strAlternate = strAlternate,
+                intFormedYear = intFormedYear,
+                strLeague = strLeague,
+                idLeague = idLeague,
+                strStadium = strStadium,
+                strKeywords = strKeywords,
+                strStadiumThumb = strStadiumThumb,
+                strStadiumLocation = strStadiumLocation,
+                intStadiumCapacity = intStadiumCapacity,
+                strWebsite = strWebsite,
+                strTeamJersey = strTeamJersey,
+                strTeamLogo = strTeamLogo
+            )
+
+            clubs.add(club)
             allClubs.append("  Team ID: $idTeam\n  Name: $strTeam\n" +
                     "  Team Short: $strTeamShort\n  Alternate: $strAlternate\n  Formed Year: $intFormedYear\n " +
                     "  League: $strLeague\n " +
@@ -161,6 +193,9 @@ private fun parseJSON(stb: StringBuilder, context: Context): String{
                     "  Keywords: $strKeywords\n  Stadium Thumb: $strStadiumThumb\n " +
                     "  Stadium Location: $strStadiumLocation\n  Stadium Capacity: $intStadiumCapacity\n " +
                     "  Website: $strWebsite\n  TeamJersey: $strTeamJersey\n  TeamLogo: $strTeamLogo\n\n")
+        }
+        if (saveToDatabase) {
+            club_dao.insertClubs(clubs)
         }
 
         return allClubs.append("\n\n").toString()
