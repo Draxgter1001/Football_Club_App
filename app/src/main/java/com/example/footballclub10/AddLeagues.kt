@@ -172,7 +172,8 @@ fun LeagueList(leagues: List<League>) {
     LazyColumn {
         items(leagues) { league ->
             Text(
-                text = "${league.idLeague}: ${league.strLeague} - ${league.strSport} - ${league.strLeagueAlternate}",
+                text = "League ID:${league.idLeague}\nLeague Name: ${league.strLeague}\nLeague Sport: ${league.strSport}\n" +
+                        "League Alternate Names: ${league.strLeagueAlternate}",
                 modifier = Modifier.padding(16.dp)
             )
         }
