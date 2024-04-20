@@ -23,6 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -52,8 +53,8 @@ class SearchClubs : ComponentActivity() {
 
 @Composable
 fun SearchClubsContent(){
-    var keyword by remember{  mutableStateOf("") }
-    var searchResults by remember{ mutableStateOf<List<Club>>(emptyList()) }
+    var keyword by rememberSaveable {  mutableStateOf("") }
+    var searchResults by rememberSaveable { mutableStateOf<List<Club>>(emptyList()) }
     val clubRepository = remember { ClubRepository(db.getClubDao()) }
 
     val context = LocalContext.current
@@ -73,7 +74,7 @@ fun SearchClubsContent(){
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Row(modifier = Modifier.padding(16.dp),
+        Row(
             horizontalArrangement = Arrangement.Center
         ) {
             Button(
