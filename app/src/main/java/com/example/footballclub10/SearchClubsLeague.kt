@@ -30,7 +30,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.footballclub10.data.Club
-import com.example.footballclub10.data.ClubDao
 import com.example.footballclub10.ui.theme.FootBallClub10Theme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -44,12 +43,9 @@ import java.lang.StringBuilder
 import java.net.HttpURLConnection
 import java.net.URL
 
-private lateinit var club_dao: ClubDao
-
 class SearchClubsLeague : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        club_dao = db.getClubDao()
         setContent {
             FootBallClub10Theme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
@@ -74,7 +70,7 @@ fun SearchClubsLeagueContent(){
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         TextField(
-            modifier = Modifier.padding(5.dp),
+            modifier = Modifier.padding(top = 20.dp),
             placeholder = { Text(text = "Enter League Name") },
             value = keyword,
             onValueChange = { keyword = it }
