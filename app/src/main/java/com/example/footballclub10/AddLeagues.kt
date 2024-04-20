@@ -20,6 +20,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -67,11 +68,11 @@ private fun getLeaguesFromJson(context: Context): List<League> {
 }
 @Composable
 fun AddLeaguesContent(){
-    var strLeague by remember { mutableStateOf("") }
-    var strSport by remember { mutableStateOf("") }
-    var strLeagueAlternate by remember{ mutableStateOf("") }
-    val leagueString by remember { mutableStateOf("") }
-    var leagues by remember { mutableStateOf(emptyList<League>()) }
+    var strLeague by rememberSaveable { mutableStateOf("") }
+    var strSport by rememberSaveable { mutableStateOf("") }
+    var strLeagueAlternate by rememberSaveable{ mutableStateOf("") }
+    val leagueString by rememberSaveable { mutableStateOf("") }
+    var leagues by rememberSaveable { mutableStateOf(emptyList<League>()) }
 
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -113,10 +114,9 @@ fun AddLeaguesContent(){
             )
         }
 
-        Spacer(modifier = Modifier.padding(10.dp))
+        Spacer(modifier = Modifier.padding(4.dp))
 
         Row(
-            modifier = Modifier.padding(top = 16.dp),
             horizontalArrangement = Arrangement.Center
         ) {
             Button(
@@ -155,12 +155,11 @@ fun AddLeaguesContent(){
             }
         }
 
-        Spacer(modifier = Modifier.padding(10.dp))
+        Spacer(modifier = Modifier.padding(4.dp))
 
         Column(
             modifier = Modifier
-                .wrapContentSize(Alignment.TopCenter)
-                .padding(top = 16.dp),
+                .wrapContentSize(Alignment.TopCenter),
             horizontalAlignment = Alignment.CenterHorizontally
         ){
             LeagueList(leagues = leagues)
