@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.sp
 fun MainMenuButtons(context: Context){
     val fontSize by remember { mutableStateOf(24.sp) }
 
-
     Column(modifier = Modifier
         .fillMaxSize()
         .wrapContentSize(Alignment.Center)) {
@@ -49,6 +48,5 @@ fun MainMenuButtons(context: Context){
             .padding(top = 30.dp)) {
             Text(text = "Search for Clubs", style = TextStyle(fontSize = fontSize), color = Color.Black)
         }
-
     }
 }
