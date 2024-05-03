@@ -48,5 +48,12 @@ fun MainMenuButtons(context: Context){
             .padding(top = 30.dp)) {
             Text(text = "Search for Clubs", style = TextStyle(fontSize = fontSize), color = Color.Black)
         }
+
+        Button(onClick = { val intent = Intent(context, ClubsJersey::class.java)
+            context.startActivity(intent) }, modifier = Modifier
+            .size(width = 350.dp, height = 100.dp)
+            .padding(top = 30.dp)) {
+            Text(text = "Clubs Jersey", style = TextStyle(fontSize = fontSize), color = Color.Black)
+        }
     }
 }
