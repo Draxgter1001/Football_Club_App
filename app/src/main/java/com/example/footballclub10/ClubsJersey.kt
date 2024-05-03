@@ -15,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -86,7 +87,7 @@ fun ClubsJerseyContent() {
             },
             enabled = leagueName.isNotBlank() && clubSubstring.isNotBlank()
         ) {
-            Text("Fetch Jerseys")
+            Text("Fetch Jerseys", color = Color.Black)
         }
         Spacer(modifier = Modifier.height(10.dp))
         jerseys.forEachIndexed { index, (year, bitmap) ->
