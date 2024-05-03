@@ -89,14 +89,19 @@ fun ClubsJerseyContent() {
         ) {
             Text("Fetch Jerseys", color = Color.Black)
         }
-        Spacer(modifier = Modifier.height(10.dp))
-        jerseys.forEachIndexed { index, (year, bitmap) ->
-            bitmap?.let {
-                Image(bitmap = it.asImageBitmap(), contentDescription = "Jersey from $year")
-                Spacer(modifier = Modifier.height(10.dp))
-                if (index < jerseys.size - 1) {
-                    Text("Year: $year", modifier = Modifier.padding(horizontal = 8.dp))
+
+        Spacer(modifier = Modifier.padding(10.dp))
+        if(clubSubstring.isNotEmpty()){
+            Text(text = "Clubs with the following keyword '$clubSubstring':", modifier = Modifier.padding(bottom = 10.dp))
+            Spacer(modifier = Modifier.height(10.dp))
+            jerseys.forEachIndexed { index, (year, bitmap) ->
+                bitmap?.let {
+                    Image(bitmap = it.asImageBitmap(), contentDescription = "Jersey from $year")
                     Spacer(modifier = Modifier.height(10.dp))
+                    if (index < jerseys.size - 1) {
+                        Text("Year: $year", modifier = Modifier.padding(horizontal = 8.dp))
+                        Spacer(modifier = Modifier.height(10.dp))
+                    }
                 }
             }
         }

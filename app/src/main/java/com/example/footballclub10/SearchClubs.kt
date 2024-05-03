@@ -103,7 +103,6 @@ fun SearchClubsContent(){
             Text(text = "Clubs with the following keyword '$keyword':", modifier = Modifier.padding(bottom = 10.dp))
             ClubList(clubs = searchResults)
         }
-
     }
 }
 
