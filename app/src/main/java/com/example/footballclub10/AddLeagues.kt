@@ -27,12 +27,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.footballclub10.data.League
-import com.example.footballclub10.data.LeagueDao
+import com.example.footballclub10.data.LeagueDAO
 import com.example.footballclub10.ui.theme.FootBallClub10Theme
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
-private lateinit var league_dao: LeagueDao
+private lateinit var league_dao: LeagueDAO
 
 class AddLeagues : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +48,7 @@ class AddLeagues : ComponentActivity() {
     }
 }
 
-private fun getLeaguesFromJson(context: Context): List<League> {
+private fun getLeagues(context: Context): List<League> {
     val json = context.assets.open("leagues.json").bufferedReader().use { it.readText() }
     val leagues = mutableListOf<League>()
 
@@ -76,7 +76,7 @@ fun AddLeaguesContent(){
 
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val leaguesJson = getLeaguesFromJson(context)
+    val leaguesJson = getLeagues(context)
 
     LaunchedEffect(leagueString){
         league_dao.insertLeagues(leaguesJson)

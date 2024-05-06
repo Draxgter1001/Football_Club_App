@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
-interface LeagueDao {
+interface LeagueDAO {
     @Query("select * from league")
     suspend fun getAllLeagues(): List<League>
 

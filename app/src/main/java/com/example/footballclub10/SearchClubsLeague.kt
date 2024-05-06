@@ -30,7 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.footballclub10.data.Club
-import com.example.footballclub10.data.ClubDao
+import com.example.footballclub10.data.ClubDAO
 import com.example.footballclub10.ui.theme.FootBallClub10Theme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -57,11 +57,11 @@ class SearchClubsLeague : ComponentActivity() {
 }
 
 @Composable
-fun SearchClubsLeagueContent(clubDao: ClubDao) { // Pass ClubDao as a parameter to the composable function
+fun SearchClubsLeagueContent(clubDao: ClubDAO) { // Pass ClubDao as a parameter to the composable function
     var clubInfoDisplay by rememberSaveable { mutableStateOf("") }
     var keyword by rememberSaveable { mutableStateOf("") }
     var saveToDatabase by rememberSaveable { mutableStateOf(false) }
-
+    var isClicked by rememberSaveable { mutableStateOf(false) }
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
@@ -84,10 +84,11 @@ fun SearchClubsLeagueContent(clubDao: ClubDao) { // Pass ClubDao as a parameter 
         ) {
             Button(
                 onClick = {
+                    isClicked = true
                     saveToDatabase = false
                     scope.launch {
                         try {
-                            val stb = fetchClubs(keyword)
+                            val stb = getClubs(keyword)
                             clubInfoDisplay = parseJSON(stb, context, saveToDatabase, clubDao)
                         } catch (e: Exception) {
                             Toast.makeText(context, "Failed to retrieve clubs: ${e.message}", Toast.LENGTH_SHORT).show()
@@ -100,11 +101,13 @@ fun SearchClubsLeagueContent(clubDao: ClubDao) { // Pass ClubDao as a parameter 
             }
 
             Button(
+                enabled = isClicked && keyword.isNotEmpty(),
                 onClick = {
+                    isClicked = false
                     saveToDatabase = true
                     scope.launch {
                         try {
-                            val stb = fetchClubs(keyword)
+                            val stb = getClubs(keyword)
                             clubInfoDisplay = parseJSON(stb, context, saveToDatabase, clubDao)
                             Toast.makeText(context, "Clubs saved to database", Toast.LENGTH_SHORT).show()
                         } catch (e: Exception) {
@@ -128,7 +131,7 @@ fun SearchClubsLeagueContent(clubDao: ClubDao) { // Pass ClubDao as a parameter 
     }
 }
 
-private suspend fun fetchClubs(keyword: String): StringBuilder {
+private suspend fun getClubs(keyword: String): StringBuilder {
     val urlString = "https://www.thesportsdb.com/api/v1/json/3/search_all_teams.php?l=$keyword"
     val url = URL(urlString)
     val con: HttpURLConnection = url.openConnection() as HttpURLConnection
@@ -147,7 +150,7 @@ private suspend fun fetchClubs(keyword: String): StringBuilder {
     return stb
 }
 
-private suspend fun parseJSON(stb: StringBuilder, context: Context, saveToDatabase: Boolean, clubDao: ClubDao): String {
+private suspend fun parseJSON(stb: StringBuilder, context: Context, saveToDatabase: Boolean, clubDao: ClubDAO): String {
     val clubs = mutableListOf<Club>()
     try {
         val json = JSONObject(stb.toString())

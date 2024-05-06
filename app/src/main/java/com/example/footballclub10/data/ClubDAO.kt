@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
-interface ClubDao {
+interface ClubDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertClubs(clubs: List<Club>)
 

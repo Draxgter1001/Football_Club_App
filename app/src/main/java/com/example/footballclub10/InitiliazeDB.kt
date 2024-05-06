@@ -3,9 +3,9 @@ package com.example.footballclub10
 import android.app.Application
 import androidx.room.Room
 import com.example.footballclub10.data.AppDatabase
-import com.example.footballclub10.data.ClubDao
+import com.example.footballclub10.data.ClubDAO
 
-class Application : Application() {
+class InitiliazeDB : Application() {
     override fun onCreate() {
         super.onCreate()
         db = Room.databaseBuilder(this, AppDatabase::class.java, "football_database").build()
@@ -14,4 +14,4 @@ class Application : Application() {
 }
 
 lateinit var db: AppDatabase
-lateinit var club_dao: ClubDao
+lateinit var club_dao: ClubDAO

@@ -79,7 +79,7 @@ fun ClubsJerseyContent() {
                 scope.launch {
                     jerseys.clear()
                     try {
-                        fetchJerseys(leagueName, clubSubstring, jerseys, context)
+                        getJerseys(leagueName, clubSubstring, jerseys, context)
                     } catch (e: Exception) {
                         Toast.makeText(context, "Failed to fetch data: ${e.message}", Toast.LENGTH_LONG).show()
                     }
@@ -108,10 +108,10 @@ fun ClubsJerseyContent() {
     }
 }
 
-suspend fun fetchJerseys(leagueName: String, clubSubstring: String, jerseys: MutableList<Pair<String, Bitmap?>>, context: android.content.Context) {
+suspend fun getJerseys(leagueName: String, clubSubstring: String, jerseys: MutableList<Pair<String, Bitmap?>>, context: android.content.Context) {
     withContext(Dispatchers.IO) {
         try {
-            val teamIds = fetchTeamIds(leagueName, clubSubstring, context)
+            val teamIds = getTeamIds(leagueName, clubSubstring, context)
             teamIds.forEach { teamId ->
                 try {
                     val jerseysUrl = URL("https://www.thesportsdb.com/api/v1/json/3/lookupequipment.php?id=$teamId")
@@ -157,7 +157,7 @@ fun loadBitmap(url: String): Bitmap? {
     }
 }
 
-suspend fun fetchTeamIds(leagueName: String, clubSubstring: String, context: android.content.Context): List<String> {
+suspend fun getTeamIds(leagueName: String, clubSubstring: String, context: android.content.Context): List<String> {
     val urlString = "https://www.thesportsdb.com/api/v1/json/3/search_all_teams.php?l=$leagueName"
     val url = URL(urlString)
     val connection = url.openConnection() as HttpsURLConnection

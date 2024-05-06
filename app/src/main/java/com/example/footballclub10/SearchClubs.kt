@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -45,7 +47,9 @@ class SearchClubs : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FootBallClub10Theme {
-                SearchClubsContent()
+                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                    SearchClubsContent()
+                }
             }
         }
     }
@@ -101,7 +105,7 @@ fun SearchClubsContent(){
 
         if(searchResults.isNotEmpty()){
             Text(text = "Clubs with the following keyword '$keyword':", modifier = Modifier.padding(bottom = 10.dp))
-            ClubList(clubs = searchResults)
+            ShowClubList(clubs = searchResults)
         }
     }
 }
@@ -126,7 +130,7 @@ fun loadImageBitmap(imageUrl: String): ImageBitmap? {
 }
 
 @Composable
-fun ClubList(clubs: List<Club>) {
+fun ShowClubList(clubs: List<Club>) {
     LazyColumn {
         items(clubs) { club ->
             Row(
